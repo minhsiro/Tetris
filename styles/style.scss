@@ -1,0 +1,106 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    --background-color: #F6F1EB;
+    --board-background: black;
+    --text-color: black;
+    --accent-color: orangered;
+    --background-image: none;
+}
+body.dark {
+    --background-color: #333;
+    --board-background: black;
+    --text-color: white;
+    --accent-color: #660066;
+}
+
+button {
+    height: 35px;
+    width: 100px;
+    border: none;
+    outline: none;
+    border-radius: 0 0.5em 0.5em 0;
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    transform: scale(1);
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.parent {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--background-color);
+    transition: 1s;
+    .board {
+        display:flex;
+        height: 800px;
+        width: 400px;
+        flex-wrap: wrap;
+        border: 1px solid blue;
+        background-color: black;
+        border-radius: 0.4em;
+        .node {
+            border: 1px solid grey;
+            flex: 10%;
+            background-color: var(--board-background);
+            border-radius: 0.4em;
+        }
+    }
+    #game-settings {
+        display: flex;
+        flex-direction: column;
+        #score-board {
+            color: var(--text-color);
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 1em;
+            #score {
+                height: 100px;
+                width: 150px;
+                background-color: white;
+                border-radius: 0 0.4em 0.4em 0;
+                background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,118,121,1) 0%, rgba(0,212,255,1) 100%);
+            }
+        }
+        #next-piece {
+            color: var(--text-color);
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 3em;
+            #hint {
+                height: 100px;
+                width: 150px;
+                background-color: white;
+                background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,118,121,1) 0%, rgba(0,212,255,1) 100%);
+
+                border-radius: 0 0.4em 0.4em 0;
+            }
+        }
+        button {
+            margin-top: 0.5em;
+        }
+    }
+}
+
+.tetromino {
+    background-color: yellow !important;
+}
+

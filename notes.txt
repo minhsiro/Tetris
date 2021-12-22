@@ -1,0 +1,14 @@
+- use grid layout for board
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout
+
+- how to empty array
+https://www.javascripttutorial.net/array/4-ways-empty-javascript-array/
+
+- key code
+https://keycode.info/
+
+- responsive flex
+https://www.w3schools.com/css/css3_flexbox_responsive.asp
+
+- css gradient
+https://cssgradient.io/

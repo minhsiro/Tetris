@@ -1,0 +1,30 @@
+*** Requirements
+- HTML canvas
+- 7 tetrominoes (I, J, L, O, S, T, Z)
+
+
+
+
+
+
+
+
+*** design:
+- a board to draw tetrominoes on (canvas) 10 width x 20 height
+- a function to calculate score
+- a function to keep track level
+- a function to show the next tetromino
+- the ability to start/pause/reset the game
+- a function to count time
+- a function for game speed according to level
+
+- rotate tetromino 4 directions
+- move left, right & down on keypress (check boundary for 2 sides)              done
+- check left - right boundary                                                   done
+- check if a line is filled, => clear
+- how to check lose ???
+
+- a single line clear => 100 points
+- 4 lines clear => 800 points
+
+

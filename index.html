@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/style.css">
+    <script type="module" src="./src/App.js" defer></script>
+    <!-- defer === put script tag at bottom of body -->
+    <title>Tetris</title>
+</head>
+<body class="dark">
+    <div class="parent">
+
+        <div class="board" id="board-game">
+
+        </div>
+        <div id="game-settings">
+            <div id="score-board">
+                <div>Score:</div>
+                <div id="score"></div>
+            </div>
+            <div id="next-piece">
+                <div>Next:</div>
+                <div id="hint"></div>
+            </div>
+            <button id="play-btn">Play/Pause</button>
+            <button id="reset-btn">Reset</button>
+            <button id="dark-mode-btn">Dark Mode</button>
+        </div>
+    </div>
+    </body>
+</html>

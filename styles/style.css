@@ -1,0 +1,159 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  --background-color: #F6F1EB;
+  --board-background: black;
+  --text-color: black;
+  --accent-color: orangered;
+  --background-image: none;
+}
+
+body.dark {
+  --background-color: #333;
+  --board-background: black;
+  --text-color: white;
+  --accent-color: #660066;
+}
+
+button {
+  height: 35px;
+  width: 100px;
+  border: none;
+  outline: none;
+  border-radius: 0 0.5em 0.5em 0;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+button:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.parent {
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: var(--background-color);
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.parent .board {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 800px;
+  width: 400px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  border: 1px solid blue;
+  background-color: black;
+  border-radius: 0.4em;
+}
+
+.parent .board .node {
+  border: 1px solid grey;
+  -webkit-box-flex: 10%;
+      -ms-flex: 10%;
+          flex: 10%;
+  background-color: var(--board-background);
+  border-radius: 0.4em;
+}
+
+.parent #game-settings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.parent #game-settings #score-board {
+  color: var(--text-color);
+  font-size: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.parent #game-settings #score-board #score {
+  height: 100px;
+  width: 150px;
+  background-color: white;
+  border-radius: 0 0.4em 0.4em 0;
+  background: -webkit-gradient(linear, left top, right top, from(#020024), color-stop(0%, #097679), to(#00d4ff));
+  background: linear-gradient(90deg, #020024 0%, #097679 0%, #00d4ff 100%);
+}
+
+.parent #game-settings #next-piece {
+  color: var(--text-color);
+  font-size: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 3em;
+}
+
+.parent #game-settings #next-piece #hint {
+  height: 100px;
+  width: 150px;
+  background-color: white;
+  background: -webkit-gradient(linear, left top, right top, from(#020024), color-stop(0%, #097679), to(#00d4ff));
+  background: linear-gradient(90deg, #020024 0%, #097679 0%, #00d4ff 100%);
+  border-radius: 0 0.4em 0.4em 0;
+}
+
+.parent #game-settings button {
+  margin-top: 0.5em;
+}
+
+.tetromino {
+  background-color: yellow !important;
+}
+/*# sourceMappingURL=style.css.map */

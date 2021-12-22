@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "sass": "^1.45.1",
+    "styled-components": "^5.3.3"
+  }
+}
