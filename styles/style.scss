@@ -5,17 +5,20 @@
 }
 
 body {
-    --background-color: #F6F1EB;
+    --background-color: #FFDEE9;
     --board-background: black;
     --text-color: black;
     --accent-color: orangered;
-    --background-image: none;
+    --background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);;
+
 }
 body.dark {
     --background-color: #333;
     --board-background: black;
     --text-color: white;
     --accent-color: #660066;
+    --background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+
 }
 
 button {
@@ -42,15 +45,17 @@ button {
     align-items: center;
     flex-direction: row;
     background-color: var(--background-color);
+    background-image: var(--background-image);
     transition: 1s;
     .board {
         display:flex;
         height: 800px;
         width: 400px;
         flex-wrap: wrap;
-        border: 1px solid blue;
+        outline: 20px solid purple;
+
         background-color: black;
-        border-radius: 0.4em;
+        outline-style: outset;
         .node {
             border: 1px solid grey;
             flex: 10%;
@@ -90,8 +95,20 @@ button {
                 width: 150px;
                 background-color: white;
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,118,121,1) 0%, rgba(0,212,255,1) 100%);
-
                 border-radius: 0 0.4em 0.4em 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                flex-wrap: wrap;
+                padding: 10px 15px 10px 15px;
+                .mini-node {
+                    background-color: white;
+                    height: 20px;
+                    width: 30px;
+                    flex: 25%;
+                    border:1px solid black;
+                }
             }
         }
         button {
@@ -101,6 +118,9 @@ button {
 }
 
 .tetromino {
-    background-color: yellow !important;
+    // background-color: yellow !important;
+    outline: 3px solid white;
+    outline-style: outset;
+
 }
 

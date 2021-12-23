@@ -12,3 +12,10 @@ https://www.w3schools.com/css/css3_flexbox_responsive.asp
 
 - css gradient
 https://cssgradient.io/
+
+- border radius 2 corners
+border-radius: top-left top-right bottom-right bottom-left
+
+- flex 10 items per row: add flex in child component
+flex: 10%;
+
