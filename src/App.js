@@ -68,39 +68,47 @@ const game = () => {
       currentPosition += step;
       draw();
       detectCollision();
-      //detectCollision();
-    },400);
+      detectTetris();
+      detectGameover();
+    },500);
   } else if (isRunning === false) {
     clearInterval(gameUpdate);
   }
 }
 
 // detect collision, if detected, delay 0.3s for users to change their mind
+let y;
 const detectCollision = () => {
   if (current.some((element, index) =>
                                   grid[currentPosition + element + step].classList.contains("touched"))) {
-      setTimeout(() => {
+      console.log("inside timeout");
+      y = setTimeout(() => {
         if(isMoveRight === true || isMoveLeft === true) {
-          if (current.some((element, index) =>
-          grid[currentPosition + element + step].classList.contains("touched"))) {
-            current.forEach((element, index) => {
-              grid[currentPosition + element].classList.add("touched");
-            })
-            currentPosition = 4;
-            let temp = random;
-            currentRotation = 0;
-            random = Math.floor(Math.random()*tetrominoes.length);
-            current = tetrominoes[Math.floor(random)][currentRotation];
-            while (random === temp) {
+            // this will cause number 2 bug.
+            if (current.some((element, index) =>
+            grid[currentPosition + element + step].classList.contains("touched"))) {
+              current.forEach((element, index) => {
+                grid[currentPosition + element].classList.add("touched");
+              })
+              currentPosition = 4;
+              let temp = random;
+              currentRotation = 0;
               random = Math.floor(Math.random()*tetrominoes.length);
               current = tetrominoes[Math.floor(random)][currentRotation];
+              while (random === temp) {
+                random = Math.floor(Math.random()*tetrominoes.length);
+                current = tetrominoes[Math.floor(random)][currentRotation];
+              }
+              draw();
+
             }
-            draw();
-          } else {
-
-          }
-
-        } else {
+            // it will always run in here
+            else {
+              // do nothing
+              console.log("in")
+            }
+        }
+        else {
           current.forEach((element, index) => {
             grid[currentPosition + element].classList.add("touched");
           })
@@ -114,9 +122,14 @@ const detectCollision = () => {
             current = tetrominoes[Math.floor(random)][currentRotation];
           }
           draw();
+          console.log("out");
         }
-      },200)
+      },300);
+      console.log("outside timeout");
+
   }
+  isMoveLeft = false;
+  isMoveRight = false;
 }
 
   /*
@@ -132,7 +145,8 @@ const detectCollision = () => {
   }
   else if (event.keyCode === 40) {
     moveDown();
-  } else if (event.keyCode === 38) {
+  }
+  else if (event.keyCode === 38) {
     rotate();
   }
 }
@@ -148,7 +162,7 @@ const moveLeft = () => {
     currentPosition += 1;
   }
   draw();
-  detectCollision();
+  instantDetectCollision(); // important
 }
 
 const moveRight = () => {
@@ -161,17 +175,21 @@ const moveRight = () => {
     currentPosition -= 1;
   }
   draw();
-  detectCollision();
+  instantDetectCollision();
 }
 
 const moveDown = () => {
-    clearInterval(gameUpdate);
-    undraw();
-    currentPosition += step;
-    draw();
-    instantDetectCollision();
-    game();
-  }
+  // check if user move left or right and down immediately and there is a collision
+  //console.log(count);
+  instantDetectCollision();
+  clearTimeout(y);
+  clearInterval(gameUpdate);
+  undraw();
+  currentPosition += step;
+  draw();
+  instantDetectCollision();
+  game();
+}
 
 const rotate = () => {
   undraw();
@@ -219,10 +237,92 @@ const instantDetectCollision = () => {
     current = tetrominoes[Math.floor(random)][currentRotation];
     }
     draw();
+    clearInterval(y);
+    isMoveLeft = false;
+    isMoveRight = false;
+    console.log("instant");
   }
 }
 
 
+/* Handle Tetris: detection & clear */
+const detectTetris = () => {
+  let isTetris = false;
+  let count = 0;
+  let lines = 0;
+  for (let i = 199; i >= 0; i-=10) {
+    for (let j = i; j > i - 10; j --) {
+      if(grid[j].classList.contains("touched","tetromino")) {
+        count += 1;
+      }
+    }
+    //console.log(count);
+    if (count === 10) {
+      lines += 1;
+      //clearTimeout(y);
+      //console.log("timeout cleared");
+      isTetris = true;
+      clearInterval(gameUpdate);
+      //instantDetectCollision();
+      // undraw
+      if (currentPosition > step) {
+        currentPosition -= step;
+      }
+        for (let j = i; j > i - 10; j --) {
+          if (grid[j].classList.contains("touched")) {
+            grid[j].classList.remove("touched");
+          }
+          if (grid[j].classList.contains("tetromino")) {
+            grid[j].classList.remove("tetromino");
+          }
+          grid[j].style.backgroundColor = "black";
+        }
+        for (let j = i; j > 9; j -= 1) {
+          let temp = grid[j-10].style.backgroundColor;
+          if (grid[j-10].classList.contains("touched")) {
+            grid[j].classList.add("touched");
+            grid[j-10].classList.remove("touched");
+
+          }
+          if (grid[j-10].classList.contains("tetromino")) {
+            grid[j].classList.add("tetromino");
+            grid[j-10].classList.remove("tetromino");
+          }
+          grid[j].style.backgroundColor = temp;
+          grid[j-10].style.backgroundColor = "black";
+          console.log("in");
+        }
+        current.forEach((element, index) => {
+          grid[currentPosition + step*lines + element + step * lines].classList.remove("tetromino");
+          grid[currentPosition + step * lines + element + step * lines].style.backgroundColor = "";
+        })
+      //console.log("in");
+    }
+    count = 0;
+  }
+  if (isTetris) {
+    game();
+  }
+  //console.log("tetris");
+}
+
+const detectGameover = () => {
+  let isGameOver = false;
+  console.log("in");
+  clearInterval(gameUpdate);
+  instantDetectCollision();
+  for(let i = 10; i < 20; i++) {
+    if(grid[i].classList.contains("touched")) {
+      console.log("game over");
+      isRunning = false;
+      isGameOver = true;
+      console.log("over");
+    }
+  }
+  if (isGameOver ===  false) {
+    game();
+  }
+}
 
 /* Next Piece */
 // create a matrix 4x4 for mini tetrominoes

@@ -19,3 +19,8 @@ border-radius: top-left top-right bottom-right bottom-left
 - flex 10 items per row: add flex in child component
 flex: 10%;
 
+- tutorial: don't follow 100%, there are bugs
+https://github.com/kubowania/Tetris-Basic
+
+- tetris scroing system
+https://www.codewars.com/kata/5da9af1142d7910001815d32
