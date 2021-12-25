@@ -117,8 +117,8 @@ button:hover {
 .parent #game-settings #score-board #score {
   height: 100px;
   width: 150px;
-  background-color: white;
   border-radius: 0 0.4em 0.4em 0;
+  text-align: center;
   background: -webkit-gradient(linear, left top, right top, from(#020024), color-stop(0%, #097679), to(#00d4ff));
   background: linear-gradient(90deg, #020024 0%, #097679 0%, #00d4ff 100%);
 }
@@ -158,23 +158,20 @@ button:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  padding: 10px 15px 10px 15px;
 }
 
 .parent #game-settings #next-piece #hint .mini-node {
-  background-color: white;
   height: 20px;
   width: 30px;
-  -webkit-box-flex: 25%;
-      -ms-flex: 25%;
-          flex: 25%;
-  border: 1px solid black;
+  -webkit-box-flex: 20%;
+      -ms-flex: 20%;
+          flex: 20%;
 }
 
 .parent #game-settings button {
@@ -184,5 +181,9 @@ button:hover {
 .tetromino {
   outline: 3px solid white;
   outline-style: outset;
+}
+
+.miniTetro {
+  background-color: white;
 }
 /*# sourceMappingURL=style.css.map */

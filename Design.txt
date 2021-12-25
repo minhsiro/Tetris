@@ -31,3 +31,18 @@
 - 4 lines clear => 800 points
 
 
+inside collision
+App.js:75 true
+App.js:129 out
+App.js:268 in tetris
+App.js:129 out
+App.js:268 in tetris
+App.js:134 inside collision
+App.js:75 true
+App.js:134 inside collision
+App.js:75 true
+App.js:129 out
+App.js:268 in tetris
+App.js:129 out
+App.js:268 in tetris
+App.js:134 inside collision

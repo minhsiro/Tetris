@@ -9,6 +9,9 @@ function toggleDarkMode() {
 }
 
 
+let score = document.getElementById("score");
+score.innerHTML = "0";
+
 let playButton = document.getElementById("play-btn");
 let isRunning = false;
 const handlePlay = () => {
@@ -48,6 +51,8 @@ let gameUpdate;
 let isMoveLeft = false;
 let isMoveRight = false;
 let colors = ["cyan", "purple", "red", "yellow", "green", "blue", "orange"];
+let timeInterval = 1000;
+let detectInterval = 800;
 
 const draw = () => {
   current.forEach((element, index) => {
@@ -65,20 +70,23 @@ const undraw = () => {
 
 const game = () => {
   draw();
+  drawHint();
   if(isRunning === true) {
     gameUpdate = setInterval(() => {
       undraw();
       currentPosition += step;
       draw();
+      drawHint();
       detectCollision();
       detectTetris();
-      //detectGameover();
-
-    },500);
+      detectGameover();
+    },timeInterval);
   } else if (isRunning === false) {
     clearInterval(gameUpdate);
   }
 }
+
+
 
 // detect collision, if detected, delay 0.3s for users to change their mind
 let y;
@@ -108,7 +116,7 @@ const detectCollision = () => {
             // it will always run in here
             else {
               // do nothing
-              console.log("in")
+              //console.log("in")
             }
         }
         else {
@@ -125,11 +133,13 @@ const detectCollision = () => {
             current = tetrominoes[Math.floor(random)][currentRotation];
           }
           draw();
-          console.log("out");
+          //console.log("out");
+          undrawHint();
+          drawHint();
         }
-      },300);
-      detectGameover();
-
+      },detectInterval);
+    //detectTetris(); dont put detectGameover or detect tetris inside both detectCollision
+    //console.log("inside collision");
   }
   isMoveLeft = false;
   isMoveRight = false;
@@ -141,16 +151,28 @@ const detectCollision = () => {
 /* Handle key press by user */
  const handleKeyDown = (event) => {
   if (event.keyCode === 37) {
-    moveLeft();
+    if (isRunning) {
+      moveLeft();
+    }
   }
   else if (event.keyCode === 39) {
-    moveRight();
+    if (isRunning) {
+      moveRight();
+    }
   }
   else if (event.keyCode === 40) {
-    moveDown();
+    if (isRunning) {
+      moveDown();
+    }
   }
   else if (event.keyCode === 38) {
-    rotate();
+    if (isRunning) {
+      rotate();
+    }
+  } else if (event.keyCode === 32) {
+    if(isRunning) {
+      moveToBottom();
+    }
   }
 }
 document.addEventListener("keydown", handleKeyDown);
@@ -169,30 +191,32 @@ const moveLeft = () => {
 }
 
 const moveRight = () => {
-  isMoveRight = true;
-  undraw();
-  const isAtRight = current.some((element,index) =>(currentPosition + element) % step === step - 1);
-  if (!isAtRight) currentPosition += 1;
-  if (current.some((element, index) =>
-                grid[currentPosition + element].classList.contains("touched"))) {
-    currentPosition -= 1;
-  }
-  draw();
-  instantDetectCollision();
+    isMoveRight = true;
+    undraw();
+    const isAtRight = current.some((element,index) =>(currentPosition + element) % step === step - 1);
+    if (!isAtRight) currentPosition += 1;
+    if (current.some((element, index) =>
+                  grid[currentPosition + element].classList.contains("touched"))) {
+      currentPosition -= 1;
+    }
+    draw();
+    instantDetectCollision();
+
 }
 
 const moveDown = () => {
   // check if user move left or right and down immediately and there is a collision
   //console.log(count);
-  instantDetectCollision();
-  clearTimeout(y);
-  clearInterval(gameUpdate);
-  undraw();
-  currentPosition += step;
-  draw();
-  instantDetectCollision();
-  game();
-  detectGameover();
+    instantDetectCollision();
+    clearTimeout(y);
+    clearInterval(gameUpdate);
+    undraw();
+    currentPosition += step;
+    draw();
+    instantDetectCollision();
+    //detectTetris(); dont put detectGameover or detect tetris inside both detectCollision
+    console.log(isRunning);
+    game();
 }
 
 const rotate = () => {
@@ -225,6 +249,35 @@ const rotate = () => {
   instantDetectCollision();
 }
 
+// after click play btn, window will lose focus => bug, user has to click back into the board
+const moveToBottom = () => {
+  let check = false;
+  undraw();
+  while(check === false) {
+    if(current.some((element, index) =>
+    grid[currentPosition + element + step].classList.contains("touched"))) {
+      current.forEach((element, index) => {
+        grid[currentPosition + element].classList.add("touched");
+        })
+        draw();
+        currentPosition = 4;
+        let temp = random;
+        currentRotation = 0;
+        random = Math.floor(Math.random()*tetrominoes.length);
+        current = tetrominoes[Math.floor(random)][currentRotation];
+        while (random === temp) {
+        random = Math.floor(Math.random()*tetrominoes.length);
+        current = tetrominoes[Math.floor(random)][currentRotation];
+        }
+        check = true;
+        undrawHint();
+    } else {
+      currentPosition += step;
+    }
+  }
+  console.log("out bottom");
+}
+
 const instantDetectCollision = () => {
   if(current.some((element, index) =>
   grid[currentPosition + element + step].classList.contains("touched"))) {
@@ -241,21 +294,28 @@ const instantDetectCollision = () => {
     current = tetrominoes[Math.floor(random)][currentRotation];
     }
     draw();
+    //detectTetris(); // put it or detectgameover here will cause a nasty bug
     clearInterval(y);
     isMoveLeft = false;
     isMoveRight = false;
-    console.log("instant");
+    undrawHint();
+    drawHint();
+    //console.log("instant");
   }
 }
 
-
 /* Handle Tetris: detection & clear */
 const detectTetris = () => {
+  //console.log("in tetris");
+  let countTetris = 0;
   let lines = 0;
   let isTetris = false;
   for (let i = 0; i < 219; i+= 10) {
     const row = [i,i+1,i+2,i+3, i+4, i+5,i+6,i+7,i+8,i+9];
-    // bug, but still works
+    // bug, but still works (inside collision => in tetris => out => in tetris => tetris, it is blocking program)
+    // put this inside instantDetectCollision and detectCollision instead of inside gameUpdate after detect collision to remove the blocking bug
+    // what if we put in before detectCollision ??????????????????????
+    // this is not a bug, the program is not being blocked, the second in tetris is from the next gameUpdate.
     if(row.every((element) => grid[element].classList.contains("touched","tetromino"))){
       console.log("tetris");
       clearInterval(gameUpdate);
@@ -278,12 +338,31 @@ const detectTetris = () => {
         grid[j].style.backgroundColor = temp;
         grid[j-10].style.backgroundColor = "black";
       }
+      // clear next position of piece while shifting
       current.forEach((element, index) => {
         grid[currentPosition + element + step*lines].classList.remove("tetromino");
         grid[currentPosition + element + step*lines].style.backgroundColor = "";
       })
+      if(timeInterval > 400) {
+        timeInterval -= lines;
+        detectInterval -= lines;
+      }
     }
     }
+    if (lines === 1) {
+      countTetris = 100;
+    } else if (lines === 2) {
+      countTetris = 200;
+    } else if (lines === 3) {
+      countTetris = 400;
+    } else if (lines === 4) {
+      countTetris = 800;
+    } else {
+
+    }
+
+    score.innerHTML = (parseInt(score.innerHTML) + countTetris).toString();
+
     lines = 0;
     if (isTetris) {
       game();
@@ -316,27 +395,36 @@ const detectGameover = () => {
 
 /* Next Piece */
 // create a matrix 4x4 for mini tetrominoes
-const miniTetroes = [[1, 5, 9, 13], // I
-                    [1,4,5,6], // T
-                    [0,1,5,6], // Z
-                    [5,6,9,10], // O
-                    [1,2,4,5], // S
-                    [1,5,8,9], // J
-                    [0,4,8,9]]; // L
+const miniTetroes = [[2, 7, 12, 17], // I
+                    [7,11,12,13], // T
+                    [6,7,12,13], // Z
+                    [6,7,8,11,12,13,16,17,18], // O
+                    [7,8,11,12], // S
+                    [7,12,16,17], // J
+                    [7,12,17,18]]; // L
 
-const miniGrid = document.getElementById("hint");
-for (let i = 0; i < 16; i++) {
+const miniBoard = document.getElementById("hint");
+for (let i = 0; i < 25; i++) {
   let div = document.createElement("div");
   div.classList.add("mini-node");
-  miniGrid.appendChild(div);
+  miniBoard.appendChild(div);
 }
+const miniGrid = Array.from(document.querySelectorAll("#hint div"));
 
-
+let miniCurrent = miniTetroes[random];
 const drawHint = () => {
+  miniCurrent = miniTetroes[random]
+  miniCurrent.forEach((element) => {
+    miniGrid[element].classList.add("miniTetro");
 
+  })
 }
 
 const undrawHint = () => {
+  //miniCurrent = miniTetroes[random]
+  miniCurrent.forEach((element) => {
+    miniGrid[element].classList.remove("miniTetro");
+    miniGrid[element].style.backgroundColor = "";
 
+  })
 }
-

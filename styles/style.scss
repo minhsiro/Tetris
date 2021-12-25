@@ -77,8 +77,8 @@ button {
             #score {
                 height: 100px;
                 width: 150px;
-                background-color: white;
                 border-radius: 0 0.4em 0.4em 0;
+                text-align: center;
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,118,121,1) 0%, rgba(0,212,255,1) 100%);
             }
         }
@@ -99,15 +99,12 @@ button {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                flex-direction: column;
+                flex-direction: row;
                 flex-wrap: wrap;
-                padding: 10px 15px 10px 15px;
                 .mini-node {
-                    background-color: white;
                     height: 20px;
                     width: 30px;
-                    flex: 25%;
-                    border:1px solid black;
+                    flex: 20%;
                 }
             }
         }
@@ -124,3 +121,7 @@ button {
 
 }
 
+
+.miniTetro {
+    background-color: white;
+}
