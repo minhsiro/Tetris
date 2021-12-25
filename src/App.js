@@ -22,18 +22,21 @@ playButton.addEventListener("click",handlePlay);
 /* Game logic */
 const board = document.getElementById("board-game");
 // Create 200 divs to form the game board
-for(let i = 0; i < 210; i++) {
+for(let i = 0; i < 230; i++) {
   let div = document.createElement("div");
-  if (i < 200) {
+  if (i < 20) {
+    div.classList.add("start-node");
+  }
+  else if (i >= 20 && i < 220) {
     div.classList.add("node");
-  } else {
+  } else if (i >= 220){
     // add 10 div at the bottom for detecting collision
     div.classList.add("touched");
   }
   board.appendChild(div);
 }
 
-const grid = Array.from(document.querySelectorAll("#board-game div"))
+let grid = Array.from(document.querySelectorAll("#board-game div"))
 // console.log(grid);
 
 const startPosition = 4;
@@ -69,7 +72,8 @@ const game = () => {
       draw();
       detectCollision();
       detectTetris();
-      detectGameover();
+      //detectGameover();
+
     },500);
   } else if (isRunning === false) {
     clearInterval(gameUpdate);
@@ -81,7 +85,6 @@ let y;
 const detectCollision = () => {
   if (current.some((element, index) =>
                                   grid[currentPosition + element + step].classList.contains("touched"))) {
-      console.log("inside timeout");
       y = setTimeout(() => {
         if(isMoveRight === true || isMoveLeft === true) {
             // this will cause number 2 bug.
@@ -125,7 +128,7 @@ const detectCollision = () => {
           console.log("out");
         }
       },300);
-      console.log("outside timeout");
+      detectGameover();
 
   }
   isMoveLeft = false;
@@ -189,6 +192,7 @@ const moveDown = () => {
   draw();
   instantDetectCollision();
   game();
+  detectGameover();
 }
 
 const rotate = () => {
@@ -247,82 +251,68 @@ const instantDetectCollision = () => {
 
 /* Handle Tetris: detection & clear */
 const detectTetris = () => {
-  let isTetris = false;
-  let count = 0;
   let lines = 0;
-  for (let i = 199; i >= 0; i-=10) {
-    for (let j = i; j > i - 10; j --) {
-      if(grid[j].classList.contains("touched","tetromino")) {
-        count += 1;
-      }
-    }
-    //console.log(count);
-    if (count === 10) {
-      lines += 1;
-      //clearTimeout(y);
-      //console.log("timeout cleared");
-      isTetris = true;
+  let isTetris = false;
+  for (let i = 0; i < 219; i+= 10) {
+    const row = [i,i+1,i+2,i+3, i+4, i+5,i+6,i+7,i+8,i+9];
+    // bug, but still works
+    if(row.every((element) => grid[element].classList.contains("touched","tetromino"))){
+      console.log("tetris");
       clearInterval(gameUpdate);
-      //instantDetectCollision();
-      // undraw
-      if (currentPosition > step) {
-        currentPosition -= step;
+      isTetris = true;
+      lines +=1;
+      row.forEach((element) => {
+        grid[element].classList.remove("touched", "tetromino");
+        grid[element].style.backgroundColor = "black";
+      })
+      for(let j = i+9; j > 9; j--) {
+        let temp = grid[j-10].style.backgroundColor;
+        if(grid[j-10].classList.contains("touched")) {
+          grid[j].classList.add("touched");
+          grid[j-10].classList.remove("touched");
+        }
+        if(grid[j-10].classList.contains("tetromino")) {
+          grid[j].classList.add("tetromino");
+          grid[j-10].classList.remove("tetromino");
+        }
+        grid[j].style.backgroundColor = temp;
+        grid[j-10].style.backgroundColor = "black";
       }
-        for (let j = i; j > i - 10; j --) {
-          if (grid[j].classList.contains("touched")) {
-            grid[j].classList.remove("touched");
-          }
-          if (grid[j].classList.contains("tetromino")) {
-            grid[j].classList.remove("tetromino");
-          }
-          grid[j].style.backgroundColor = "black";
-        }
-        for (let j = i; j > 9; j -= 1) {
-          let temp = grid[j-10].style.backgroundColor;
-          if (grid[j-10].classList.contains("touched")) {
-            grid[j].classList.add("touched");
-            grid[j-10].classList.remove("touched");
-
-          }
-          if (grid[j-10].classList.contains("tetromino")) {
-            grid[j].classList.add("tetromino");
-            grid[j-10].classList.remove("tetromino");
-          }
-          grid[j].style.backgroundColor = temp;
-          grid[j-10].style.backgroundColor = "black";
-          console.log("in");
-        }
-        current.forEach((element, index) => {
-          grid[currentPosition + step*lines + element + step * lines].classList.remove("tetromino");
-          grid[currentPosition + step * lines + element + step * lines].style.backgroundColor = "";
-        })
-      //console.log("in");
+      current.forEach((element, index) => {
+        grid[currentPosition + element + step*lines].classList.remove("tetromino");
+        grid[currentPosition + element + step*lines].style.backgroundColor = "";
+      })
     }
-    count = 0;
-  }
-  if (isTetris) {
-    game();
-  }
-  //console.log("tetris");
+    }
+    lines = 0;
+    if (isTetris) {
+      game();
+    }
+
 }
 
 const detectGameover = () => {
-  let isGameOver = false;
-  console.log("in");
-  clearInterval(gameUpdate);
-  instantDetectCollision();
-  for(let i = 10; i < 20; i++) {
-    if(grid[i].classList.contains("touched")) {
-      console.log("game over");
+  //let isGameOver = false;
+  //instantDetectCollision();
+  // done
+    const row = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
+    if(currentPosition < 30 && current.some((element, index) =>
+    grid[currentPosition + element + step].classList.contains("touched"))) {
+      current.forEach((element, index) => {
+      grid[currentPosition + element].classList.add("touched");
+      })
+      console.log("clear timeout");
       isRunning = false;
-      isGameOver = true;
+      clearInterval(gameUpdate);
+      clearTimeout(y);
+      //isGameOver = true;
       console.log("over");
     }
   }
-  if (isGameOver ===  false) {
-    game();
-  }
-}
+  // if (isGameOver ===  false) {
+  //   game();
+  // }
+
 
 /* Next Piece */
 // create a matrix 4x4 for mini tetrominoes
