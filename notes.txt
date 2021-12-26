@@ -24,3 +24,12 @@ https://github.com/kubowania/Tetris-Basic
 
 - tetris scroing system
 https://www.codewars.com/kata/5da9af1142d7910001815d32
+
+- javascript closure
+https://www.w3schools.com/js/js_function_closures.asp
+
+- tutorial
+https://www.youtube.com/watch?v=rAUn1Lom6dw&t=573s
+
+- box shadow effects
+https://getcssscan.com/css-box-shadow-examples

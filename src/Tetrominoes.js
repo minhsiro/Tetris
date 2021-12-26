@@ -29,4 +29,4 @@ const L = [[0, step, step*2, step*2 + 1],
           [0, 1, step + 1, step*2 + 1],
           [step + 2, step*2, step*2 + 1, step*2 + 2]];
 
-export const tetrominoes = [I, T, Z, O, S, J, L];
+export const tetrominoes = [I, T, Z, O, S, J, L, I];

@@ -1,12 +1,25 @@
 *** Requirements
 - 7 tetrominoes (I, J, L, O, S, T, Z)
-- 210 div
-- array
-- foreach()
-- some()
+- 230 divs
 - Array.from()
-
-
+- addEventListener()
+- querySelector()
+- querySelectorAll()
+- keyCode()
+- Math.floor()
+- Math.random()
+- length
+- forEach()
+- splice()
+- clearInterval()
+- setInterval()
+- some()
+- innerHTML()
+- every()
+- add()
+- remove()
+- contains()
+- forLoop
 
 
 
@@ -14,35 +27,24 @@
 
 *** design:
 - a board to draw tetrominoes on (canvas) 10 width x 20 height              done
-- a function to calculate score
-- a function to keep track level
-- a function to show the next tetromino                                     working
-- the ability to start/pause/reset the game                                 working
-- a function for game speed according to level
+- functions to draw and undraw tetromino each Interval                      done
+- a function to calculate score                                             done
+- a function to show the next tetromino                                     done
+- the ability to start/pause/reset the game                                 done
+- a function for game speed according to level                              done
 
 - rotate tetromino 4 directions                                                 done
 - move left, right & down on keypress (check boundary for 2 sides)              done
+- move to bottom                                                                done
 - check left - right boundary                                                   done
-- check if a line is filled, => clear                                           working
-- how to check lose ???
-- allow use to change their decision                                            done
+- check if a line is filled, => clear                                           done
+- check gameover                                                                done
+- delay on collision                                                            done
+- detect collision immediately after left, right, rotate                        done
 
+// scoring system
 - a single line clear => 100 points
+- 2 lines clear => 200 points
+- 3 lines clear => 400 points
 - 4 lines clear => 800 points
 
-
-inside collision
-App.js:75 true
-App.js:129 out
-App.js:268 in tetris
-App.js:129 out
-App.js:268 in tetris
-App.js:134 inside collision
-App.js:75 true
-App.js:134 inside collision
-App.js:75 true
-App.js:129 out
-App.js:268 in tetris
-App.js:129 out
-App.js:268 in tetris
-App.js:134 inside collision

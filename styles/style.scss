@@ -27,13 +27,18 @@ button {
     border: none;
     outline: none;
     border-radius: 0 0.5em 0.5em 0;
+
     cursor: pointer;
     transition: 0.5s;
     background-color: var(--accent-color);
     color: var(--text-color);
     transform: scale(1);
+    transition: 0.5s;
     &:hover {
-        transform: scale(1.1);
+        //border-radius: 1em;
+        box-shadow: inset 0 0 0 2em var(--text-color);
+        color: var(--accent-color);
+        //transform: scale(1.1);
     }
 }
 
@@ -47,6 +52,66 @@ button {
     background-color: var(--background-color);
     background-image: var(--background-image);
     transition: 1s;
+
+    .instruction {
+        color: var(--text-color);
+        margin-right: 7em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border: 0.5em solid grey;
+        border-radius: 1em;
+        border-style: inset;
+        padding: 3rem;
+        transition: all 1s;
+        #instruction-title {
+            font-size: 3rem;
+            margin-bottom: 0.5em;
+        }
+        .instruction-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            .instruction-items {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row;
+                width: 100%;
+                margin: 1em 0;
+
+                .instruction-keys {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 4em;
+                    border-color: #f2f2f2;
+                    border-style: solid;
+                    border-radius: 0.5em;
+                    height: 4em;
+                    color: #555;
+                    background: -webkit-linear-gradient(top, #f9f9f9 0%, #D2D2D2 80%, #c0c0c0 100%);
+                    user-select: none; // disable text hightlight on double click
+                    margin-right: 0.5em;
+                    text-shadow: 0 0.5px 1px #777, 0 2px 6px #f2f2f2;                    border-color: #f2f2f2;
+                    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                    cursor: pointer;
+
+                    &:hover,
+                    &:focus {
+                    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+                      transform: translateY(2px);
+                    }
+                    &:active {
+                      transform: translateY(4px);
+                    }
+                }
+            }
+        }
+    }
+
     .board {
         display:flex;
         height: 800px;
@@ -75,10 +140,11 @@ button {
             flex-direction: column;
             margin-bottom: 1em;
             #score {
-                height: 100px;
+                height: auto;
                 width: 150px;
                 border-radius: 0 0.4em 0.4em 0;
                 text-align: center;
+                align-self: center;
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,118,121,1) 0%, rgba(0,212,255,1) 100%);
             }
         }
