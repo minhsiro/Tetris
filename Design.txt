@@ -20,7 +20,7 @@
 - remove()
 - contains()
 - forLoop
-
+- getElementById()
 
 
 
